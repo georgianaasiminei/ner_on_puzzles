@@ -21,5 +21,5 @@ from puzzles_extractor import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('puzzles/', include('puzzles_extractor.urls'))
+    path('', include('puzzles_extractor.urls'))
 ]

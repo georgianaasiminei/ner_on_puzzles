@@ -19,7 +19,8 @@
         <th>Description</th>
         <th>Clues</th>
         <th>URL</th>
-        <th>Source ID</th>
+        <th>NER</th>
+<!--        <th>Source ID</th>-->
     </tr>
     </thead>
     <tbody>
@@ -30,7 +31,9 @@
         <td>{{ puzzle.description }}</td>
         <td>{{ puzzle.clues }}</td>
         <td>{{ puzzle.url }}</td>
-        <td>{{ puzzle.source_id}}</td>
+        <td>
+            <a href="{% url 'puzzles_extractor:ner' puzzle_id=puzzle.id %}">NER </a>
+        </td>
     </tr>
 {% endfor %}
     </tbody>

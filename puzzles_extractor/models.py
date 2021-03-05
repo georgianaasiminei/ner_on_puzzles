@@ -29,9 +29,9 @@ class Puzzle(models.Model):
         return f"Puzzle: {self.title}, Clues: {self.clues}"
 
 
-def get_puzzle(uid: int) -> Puzzle:
+def get_puzzle_clues(uid: int) -> str:
     """Return the clues for a given Puzzle ID"""
-    result = Puzzle.objects.filter(id=uid)
+    result = Puzzle.objects.get(id=uid)
     if not result:
         raise Exception(f"There is no puzzle with ID {uid}")
     return result.clues
@@ -39,3 +39,7 @@ def get_puzzle(uid: int) -> Puzzle:
 
 def get_all_puzzles() -> List[Puzzle]:
     return Puzzle.objects.all()
+
+
+def get_puzzle(puzzle_id: int) -> Puzzle:
+    return Puzzle.objects.get(id=puzzle_id)
