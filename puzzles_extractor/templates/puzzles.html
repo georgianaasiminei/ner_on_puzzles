@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Puzzles</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<h1 style="color:red;font-size:30px;">Zebra Puzzles</h1>
+
+<table class="table table-striped table-bordered table-sm" title="Zebra Puzzles">
+    <thead class="thead-dark">
+   <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Clues</th>
+        <th>URL</th>
+        <th>Source ID</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for puzzle in puzzles %}
+    <tr>
+        <td>{{ puzzle.id }}</td>
+        <td>{{ puzzle.title }}</td>
+        <td>{{ puzzle.description }}</td>
+        <td>{{ puzzle.clues }}</td>
+        <td>{{ puzzle.url }}</td>
+        <td>{{ puzzle.source_id}}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
