@@ -6,9 +6,9 @@
 </head>
 <body>
 {% for clue in clues %}
-{{clue}}
-<p></p>
+{{clue|safe}}
 {% endfor %}
+<!--{{clues|safe}}-->
 <div>
     <input type=button value="Previous Page" onClick="javascript:history.go(-1);">
 </div>

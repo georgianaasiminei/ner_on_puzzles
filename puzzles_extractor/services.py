@@ -1,3 +1,5 @@
+from typing import List
+
 import en_core_web_sm
 
 from flair.data import Sentence
@@ -33,3 +35,41 @@ def ner_with_flair(puzzle_clues: str):
         result.append(i.to_tagged_string())
 
     return result
+
+
+def flair_for_displacy(puzzle_clues: str) -> List:
+    sentences = [Sentence(sent, use_tokenizer=True) for sent in split_single(puzzle_clues)]
+
+    tagger = SequenceTagger.load('ner')
+
+    tagger.predict(sentences)
+
+    sentences_dict = [sentence.to_dict(tag_type='ner') for sentence in sentences]
+
+    result = []
+    for dict_flair in sentences_dict:
+        for idx in dict_flair['entities']:
+            idx['end'] = idx.pop('end_pos')
+            idx['start'] = idx.pop('start_pos')
+            idx['label'] = idx.pop('labels')[0].value
+        dict_flair['ents'] = dict_flair.pop('entities')
+
+        result.append(displacy.render(dict_flair, jupyter=False, style='ent', manual=True))
+
+    return result
+
+    # sentence = Sentence(puzzle_clues)
+    #
+    # tagger = SequenceTagger.load('ner')
+    #
+    # tagger.predict(sentence)
+    #
+    # dict_flair = sentence.to_dict(tag_type='ner')
+
+    # for idx in dict_flair['entities']:
+    #     idx['end'] = idx.pop('end_pos')
+    #     idx['start'] = idx.pop('start_pos')
+    #     idx['label'] = idx.pop('labels')[0].value
+    # dict_flair['ents'] = dict_flair.pop('entities')
+    #
+    # return displacy.render(dict_flair, jupyter=False, style='ent', manual=True)
