@@ -1,18 +1,34 @@
 from typing import List
 
 import en_core_web_sm
+import spacy
 
 from flair.data import Sentence
 from flair.models import SequenceTagger
 from segtok.segmenter import split_single
 from spacy import displacy
 
-nlp = en_core_web_sm.load()
+# nlp = en_core_web_sm.load()
+nlp = spacy.load("../named_entity_recognition/models/ner_brainzilla_puzzles_model_50_lg")
 
 
 def ner_with_spcy(puzzle_clues: str):
     processed_puzzle = nlp(puzzle_clues)
-    return displacy.render(processed_puzzle, jupyter=False, style='ent')
+    # pick custom colors for each entity
+    colors = {"ANIMAL": "#778f8c",
+              "PROFESSION": "#f54242",
+              "NORP": "#966c88",
+              "HOBBY": "#fcba03",
+              "CATEGORY": "#85cbf2",
+              # "OBJECT": "#960f55",
+              "FRUIT": "linear-gradient(90deg, #ecf542, #4287f5)",
+              "COLOR": "linear-gradient(90deg, #aa9cfc, #fc9ce7)"}
+    options = {
+        "ents": ["ANIMAL", "CARDINAL", "CATEGORY", "COLOR", "DATE", "EVENT", "FAC", "FRUIT", "GPE", "HOBBY",
+                 "LANGUAGE", "LAW", "LOC", "MONEY", "NORP", "ORDINAL", "ORG", "PERCENT", "PERSON",
+                 "PRODUCT", "PROFESSION", "QUANTITY", "TIME", "WORK_OF_ART"],
+        "colors": colors}
+    return displacy.render(processed_puzzle, jupyter=False, style='ent', options=options)
 
 
 def ner_with_flair(puzzle_clues: str):
